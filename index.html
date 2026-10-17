@@ -1,68 +1,888 @@
+
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080c19"><meta name="description" content="AVI futuristic voice assistant">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080c19">
+<meta name="description" content="AVI futuristic voice assistant">
 <title>AVI — Futuristic Voice Assistant</title>
+
 <style>
-:root{color-scheme:dark;--bg:#080c19;--panel:#11182b;--muted:#91a0c2;--text:#f4f7ff;--cyan:#54e8f4;--violet:#8c74ff;--line:#ffffff18}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#25396d 0,transparent 48%),var(--bg);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);min-height:100dvh}.app{max-width:720px;margin:auto;min-height:100dvh;padding:env(safe-area-inset-top) 16px calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column}
-header{display:flex;align-items:center;justify-content:space-between;padding:18px 2px 12px}.brand{display:flex;gap:10px;align-items:center}.logo{width:43px;height:43px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,var(--cyan),var(--violet));color:#09101f;font-size:22px;font-weight:950;box-shadow:0 0 28px #55e6f233}.brand h1{font-size:20px;letter-spacing:3px;margin:0}.brand p{margin:3px 0 0;color:var(--muted);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}.pill{font-size:10px;color:#a7f3d0;border:1px solid #34d39955;background:#34d39912;border-radius:99px;padding:7px 9px}.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#34d399;margin-right:6px}
-.intro{text-align:center;margin:14px 0 0}.intro h2{font-size:clamp(25px,7vw,35px);letter-spacing:-1.2px;margin:0 0 7px}.intro p{color:var(--muted);font-size:13px;line-height:1.5;margin:0}
-.orb-area{height:230px;display:grid;place-items:center;position:relative;flex-shrink:0}.halo{position:absolute;width:215px;height:215px;border-radius:50%;background:radial-gradient(circle,#5e58f044,transparent 68%);filter:blur(8px)}.orb{width:145px;height:145px;border-radius:50%;position:relative;display:grid;place-items:center;background:radial-gradient(circle at 32% 25%,#e1ffff 0,#6ef0f5 12%,#5e72ff 43%,#26234f 75%,#10172e 100%);box-shadow:inset -14px -18px 35px #070b1d99,0 0 35px #5f82ff44,0 0 90px #5d65ff22;transition:transform .25s}.orb:before,.orb:after{content:"";position:absolute;inset:-13px;border-radius:50%;border:1px solid #8d9bff38}.orb:after{inset:-24px;border-color:#55e6f21c}.orb svg{width:42px;height:42px}.orb.listen{animation:pulse 1.3s infinite}.orb.talk{animation:speak .5s infinite alternate}@keyframes pulse{50%{transform:scale(1.07);box-shadow:0 0 0 18px #55e6f20b,0 0 60px #55e6f277}}@keyframes speak{to{transform:scale(1.045)}}
-.status{text-align:center;color:var(--cyan);font-size:13px;font-weight:650;min-height:20px}.transcript{text-align:center;color:#d7def6;font-size:13px;line-height:1.5;padding:7px 8px 12px;overflow-wrap:anywhere;min-height:42px}
-.controls{display:flex;justify-content:center;align-items:center;gap:16px;margin:2px 0 10px}.mic{width:72px;height:72px;border:0;border-radius:50%;background:linear-gradient(140deg,var(--cyan),#8278ff);color:#07101e;display:grid;place-items:center;box-shadow:0 8px 35px #5c8bff3b;cursor:pointer}.mic svg{width:29px;height:29px}.small{height:45px;min-width:45px;border-radius:15px;border:1px solid var(--line);background:#ffffff08;color:#c8d1ea;display:grid;place-items:center;cursor:pointer}.small svg{width:20px;height:20px}.hint{text-align:center;color:#74809f;font-size:10px;margin-bottom:14px}
-.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.tool{background:#ffffff07;border:1px solid var(--line);border-radius:14px;padding:10px 7px;color:#c7d2ef;font-size:11px;cursor:pointer}.tool span{display:block;font-size:17px;margin-bottom:4px}.settings{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 12px}.settings label{color:var(--muted);font-size:11px}.settings select,.settings button{background:#121b31;color:#dce4fb;border:1px solid var(--line);border-radius:10px;padding:8px;font-size:11px}.settings button{cursor:pointer}
-.chat{background:#10172a;border:1px solid var(--line);border-radius:21px;padding:13px;display:flex;flex-direction:column;min-height:180px;flex:1;max-height:390px}.chat-head{display:flex;justify-content:space-between;align-items:center;padding:1px 2px 11px;border-bottom:1px solid var(--line);font-size:12px;color:#cdd6ef}.chat-head span:last-child{color:#7e8baa;font-size:10px}.messages{overflow:auto;display:flex;flex-direction:column;gap:9px;padding:12px 1px;flex:1;min-height:75px}.msg{max-width:90%;padding:10px 12px;border-radius:15px;font-size:13px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}.msg.avi{align-self:flex-start;background:#1a2440;border:1px solid #ffffff0b;border-bottom-left-radius:5px}.msg.user{align-self:flex-end;background:linear-gradient(135deg,#3d6c91,#5547a9);border-bottom-right-radius:5px}.composer{display:flex;gap:8px;border-top:1px solid var(--line);padding-top:11px}.composer input{min-width:0;flex:1;background:#090f20;border:1px solid var(--line);border-radius:14px;padding:13px;color:var(--text);outline:none;font-size:14px}.composer input:focus{border-color:#55e6f277}.send{width:46px;border:0;border-radius:14px;background:var(--cyan);color:#07101e;display:grid;place-items:center;cursor:pointer}.send svg{width:20px;height:20px}.quick{display:flex;gap:7px;overflow:auto;padding:11px 0 2px;scrollbar-width:none}.quick button{flex-shrink:0;background:#ffffff07;border:1px solid var(--line);border-radius:99px;padding:9px 11px;color:#aeb9d5;font-size:10px;cursor:pointer}.footer{text-align:center;color:#586583;font-size:10px;padding:12px 0 0;line-height:1.5}.toast{color:#ffcf8b;font-size:11px;min-height:15px;text-align:center;margin-bottom:5px}
-@media(min-height:850px){.orb-area{height:260px}.orb{width:155px;height:155px}}
-</style></head>
-<body><div class="app">
-<header><div class="brand"><div class="logo">A</div><div><h1>AVI</h1><p>Personal voice assistant</p></div></div><div class="pill"><span class="dot"></span><span id="ready">ONLINE</span></div></header>
-<section class="intro"><h2>Your voice. Your world.</h2><p>Talk naturally. AVI can answer with AI, speak back, and remember this device’s chat.</p></section>
-<section class="orb-area"><div class="halo"></div><div class="orb" id="orb"><svg viewBox="0 0 48 48" fill="none"><path d="M24 7v34M7 24h34M12 12l24 24M36 12 12 36" stroke="white" stroke-width="1.4" stroke-linecap="round" opacity=".7"/><circle cx="24" cy="24" r="8" stroke="white" stroke-width="2"/><circle cx="24" cy="24" r="3" fill="white"/></svg></div></section>
-<div class="status" id="status">AVI is ready</div><div class="transcript" id="transcript">Tap the microphone or type a message.</div>
-<div class="controls"><button class="small" id="clear" aria-label="Clear chat" title="Clear chat">⌫</button><button class="mic" id="mic" aria-label="Start voice input" title="Start voice input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8"/></svg></button><button class="small" id="mute" aria-label="Toggle speech" title="Toggle speech">🔊</button></div>
-<div class="hint" id="hint">Tap mic to speak · Enable “Hey AVI” below for wake-word mode</div>
-<div class="tools"><button class="tool" data-site="youtube"><span>▶</span>Open YouTube</button><button class="tool" data-site="google"><span>⌕</span>Search Google</button><button class="tool" id="wake"><span>◉</span><b id="wakeLabel">Enable Hey AVI</b></button></div>
-<div class="settings"><label for="lang">Voice language</label><select id="lang"><option value="hi-IN">Hindi</option><option value="en-IN">English (India)</option><option value="en-US">English (US)</option></select><button id="remember">Memory: ON</button><button id="clearMemory">Erase memory</button></div>
-<div class="toast" id="toast"></div>
-<section class="chat"><div class="chat-head"><span>✦ &nbsp; Conversation</span><span id="count">0 messages</span></div><div class="messages" id="messages"></div><form class="composer" id="form"><input id="input" autocomplete="off" placeholder="Ask AVI anything…" aria-label="Message AVI"><button class="send" aria-label="Send message"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button></form></section>
-<div class="quick"><button data-prompt="मुझे आज के लिए प्रेरित करो">✧ Motivate me</button><button data-prompt="Tell me a fun joke">✦ Tell a joke</button><button data-prompt="What can you do?">? Help</button><button data-prompt="आज की तारीख क्या है?">◷ Date</button></div>
-<div class="footer">Memory is stored in this browser only. Keep your API key on the server — never in this page.<br>Wake-word listening requires the page to stay open and the microphone to remain allowed.</div>
+:root{
+  color-scheme:dark;
+  --bg:#080c19;
+  --panel:#11182b;
+  --muted:#91a0c2;
+  --text:#f4f7ff;
+  --cyan:#54e8f4;
+  --violet:#8c74ff;
+  --line:#ffffff18
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:radial-gradient(ellipse at 50% -20%,#25396d 0,transparent 48%),var(--bg);
+  font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;
+  color:var(--text);
+  min-height:100dvh
+}
+.app{
+  max-width:720px;
+  margin:auto;
+  min-height:100dvh;
+  padding:env(safe-area-inset-top) 16px calc(16px + env(safe-area-inset-bottom));
+  display:flex;
+  flex-direction:column
+}
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 2px 12px
+}
+.brand{display:flex;gap:10px;align-items:center}
+
+/* LOGO IMAGE */
+.logo{
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+  box-shadow:0 0 28px #55e6f233
+}
+
+.brand h1{font-size:20px;letter-spacing:3px;margin:0}
+.brand p{
+  margin:3px 0 0;
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:1.5px;
+  text-transform:uppercase
+}
+.pill{
+  font-size:10px;
+  color:#a7f3d0;
+  border:1px solid #34d39955;
+  background:#34d39912;
+  border-radius:99px;
+  padding:7px 9px
+}
+.dot{
+  display:inline-block;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#34d399;
+  margin-right:6px
+}
+.intro{text-align:center;margin:14px 0 0}
+.intro h2{
+  font-size:clamp(25px,7vw,35px);
+  letter-spacing:-1.2px;
+  margin:0 0 7px
+}
+.intro p{color:var(--muted);font-size:13px;line-height:1.5;margin:0}
+.orb-area{
+  height:230px;
+  display:grid;
+  place-items:center;
+  position:relative;
+  flex-shrink:0
+}
+.halo{
+  position:absolute;
+  width:215px;
+  height:215px;
+  border-radius:50%;
+  background:radial-gradient(circle,#5e58f044,transparent 68%);
+  filter:blur(8px)
+}
+.orb{
+  width:145px;
+  height:145px;
+  border-radius:50%;
+  position:relative;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle at 32% 25%,#e1ffff 0,#6ef0f5 12%,#5e72ff 43%,#26234f 75%,#10172e 100%);
+  box-shadow:inset -14px -18px 35px #070b1d99,0 0 35px #5f82ff44,0 0 90px #5d65ff22;
+  transition:transform .25s
+}
+.orb:before,.orb:after{
+  content:"";
+  position:absolute;
+  inset:-13px;
+  border-radius:50%;
+  border:1px solid #8d9bff38
+}
+.orb:after{inset:-24px;border-color:#55e6f21c}
+.orb svg{width:42px;height:42px}
+.orb.listen{animation:pulse 1.3s infinite}
+.orb.talk{animation:speak .5s infinite alternate}
+@keyframes pulse{
+  50%{transform:scale(1.07);box-shadow:0 0 0 18px #55e6f20b,0 0 60px #55e6f277}
+}
+@keyframes speak{to{transform:scale(1.045)}}
+.status{
+  text-align:center;
+  color:var(--cyan);
+  font-size:13px;
+  font-weight:650;
+  min-height:20px
+}
+.transcript{
+  text-align:center;
+  color:#d7def6;
+  font-size:13px;
+  line-height:1.5;
+  padding:7px 8px 12px;
+  overflow-wrap:anywhere;
+  min-height:42px
+}
+.controls{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+  margin:2px 0 10px
+}
+.mic{
+  width:72px;
+  height:72px;
+  border:0;
+  border-radius:50%;
+  background:linear-gradient(140deg,var(--cyan),#8278ff);
+  color:#07101e;
+  display:grid;
+  place-items:center;
+  box-shadow:0 8px 35px #5c8bff3b;
+  cursor:pointer
+}
+.mic svg{width:29px;height:29px}
+.small{
+  height:45px;
+  min-width:45px;
+  border-radius:15px;
+  border:1px solid var(--line);
+  background:#ffffff08;
+  color:#c8d1ea;
+  display:grid;
+  place-items:center;
+  cursor:pointer
+}
+.small svg{width:20px;height:20px}
+.hint{text-align:center;color:#74809f;font-size:10px;margin-bottom:14px}
+.tools{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:12px
+}
+.tool{
+  background:#ffffff07;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:10px 7px;
+  color:#c7d2ef;
+  font-size:11px;
+  cursor:pointer
+}
+.tool span{display:block;font-size:17px;margin-bottom:4px}
+.settings{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin:0 0 12px
+}
+.settings label{color:var(--muted);font-size:11px}
+.settings select,.settings button{
+  background:#121b31;
+  color:#dce4fb;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:8px;
+  font-size:11px
+}
+.settings button{cursor:pointer}
+.chat{
+  background:#10172a;
+  border:1px solid var(--line);
+  border-radius:21px;
+  padding:13px;
+  display:flex;
+  flex-direction:column;
+  min-height:180px;
+  flex:1;
+  max-height:390px
+}
+.chat-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:1px 2px 11px;
+  border-bottom:1px solid var(--line);
+  font-size:12px;
+  color:#cdd6ef
+}
+.chat-head span:last-child{color:#7e8baa;font-size:10px}
+.messages{
+  overflow:auto;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+  padding:12px 1px;
+  flex:1;
+  min-height:75px
+}
+.msg{
+  max-width:90%;
+  padding:10px 12px;
+  border-radius:15px;
+  font-size:13px;
+  line-height:1.5;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere
+}
+.msg.avi{
+  align-self:flex-start;
+  background:#1a2440;
+  border:1px solid #ffffff0b;
+  border-bottom-left-radius:5px
+}
+.msg.user{
+  align-self:flex-end;
+  background:linear-gradient(135deg,#3d6c91,#5547a9);
+  border-bottom-right-radius:5px
+}
+.composer{
+  display:flex;
+  gap:8px;
+  border-top:1px solid var(--line);
+  padding-top:11px
+}
+.composer input{
+  min-width:0;
+  flex:1;
+  background:#090f20;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:13px;
+  color:var(--text);
+  outline:none;
+  font-size:14px
+}
+.composer input:focus{border-color:#55e6f277}
+.send{
+  width:46px;
+  border:0;
+  border-radius:14px;
+  background:var(--cyan);
+  color:#07101e;
+  display:grid;
+  place-items:center;
+  cursor:pointer
+}
+.send svg{width:20px;height:20px}
+.quick{
+  display:flex;
+  gap:7px;
+  overflow:auto;
+  padding:11px 0 2px;
+  scrollbar-width:none
+}
+.quick button{
+  flex-shrink:0;
+  background:#ffffff07;
+  border:1px solid var(--line);
+  border-radius:99px;
+  padding:9px 11px;
+  color:#aeb9d5;
+  font-size:10px;
+  cursor:pointer
+}
+.footer{
+  text-align:center;
+  color:#586583;
+  font-size:10px;
+  padding:12px 0 0;
+  line-height:1.5
+}
+.toast{
+  color:#ffcf8b;
+  font-size:11px;
+  min-height:15px;
+  text-align:center;
+  margin-bottom:5px
+}
+@media(min-height:850px){
+  .orb-area{height:260px}
+  .orb{width:155px;height:155px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header>
+  <div class="brand">
+    <!-- LOGO IMAGE FILE: avi-logo.png -->
+    <img src="avi-logo.png" alt="AVI Assistant Logo" class="logo">
+    <div>
+      <h1>AVI</h1>
+      <p>Personal voice assistant</p>
+    </div>
+  </div>
+  <div class="pill">
+    <span class="dot"></span>
+    <span id="ready">ONLINE</span>
+  </div>
+</header>
+
+<section class="intro">
+  <h2>Your voice. Your world.</h2>
+  <p>Talk naturally. AVI can answer with AI, speak back, and remember this device’s chat.</p>
+</section>
+
+<section class="orb-area">
+  <div class="halo"></div>
+  <div class="orb" id="orb">
+    <svg viewBox="0 0 48 48" fill="none">
+      <path d="M24 7v34M7 24h34M12 12l24 24M36 12 12 36"
+        stroke="white" stroke-width="1.4" stroke-linecap="round" opacity=".7"/>
+      <circle cx="24" cy="24" r="8" stroke="white" stroke-width="2"/>
+      <circle cx="24" cy="24" r="3" fill="white"/>
+    </svg>
+  </div>
+</section>
+
+<div class="status" id="status">AVI is ready</div>
+<div class="transcript" id="transcript">Tap the microphone or type a message.</div>
+
+<div class="controls">
+  <button class="small" id="clear" aria-label="Clear chat" title="Clear chat">⌫</button>
+  <button class="mic" id="mic" aria-label="Start voice input" title="Start voice input">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <rect x="9" y="2" width="6" height="13" rx="3"/>
+      <path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8"/>
+    </svg>
+  </button>
+  <button class="small" id="mute" aria-label="Toggle speech" title="Toggle speech">🔊</button>
 </div>
+
+<div class="hint" id="hint">Tap mic to speak · Enable “Hey AVI” below for wake-word mode</div>
+
+<div class="tools">
+  <button class="tool" data-site="youtube"><span>▶</span>Open YouTube</button>
+  <button class="tool" data-site="google"><span>⌕</span>Search Google</button>
+  <button class="tool" id="wake"><span>◉</span><b id="wakeLabel">Enable Hey AVI</b></button>
+</div>
+
+<div class="settings">
+  <label for="lang">Voice language</label>
+  <select id="lang">
+    <option value="hi-IN">Hindi</option>
+    <option value="en-IN">English (India)</option>
+    <option value="en-US">English (US)</option>
+  </select>
+  <button id="remember">Memory: ON</button>
+  <button id="clearMemory">Erase memory</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<section class="chat">
+  <div class="chat-head">
+    <span>✦ &nbsp; Conversation</span>
+    <span id="count">0 messages</span>
+  </div>
+  <div class="messages" id="messages"></div>
+  <form class="composer" id="form">
+    <input id="input" autocomplete="off" placeholder="Ask AVI anything…" aria-label="Message AVI">
+    <button class="send" aria-label="Send message">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m22 2-7 20-4-9-9-4Z"/>
+        <path d="M22 2 11 13"/>
+      </svg>
+    </button>
+  </form>
+</section>
+
+<div class="quick">
+  <button data-prompt="मुझे आज के लिए प्रेरित करो">✧ Motivate me</button>
+  <button data-prompt="Tell me a fun joke">✦ Tell a joke</button>
+  <button data-prompt="What can you do?">? Help</button>
+  <button data-prompt="आज की तारीख क्या है?">◷ Date</button>
+</div>
+
+<div class="footer">
+  Memory is stored in this browser only. Keep your API key on the server — never in this page.
+  <br>Wake-word listening requires the page to stay open and the microphone to remain allowed.
+</div>
+</div>
+
 <script>
-const $=id=>document.getElementById(id), messages=$('messages');
-let recognition=null,listening=false,wakeMode=false,voiceOn=true,memoryOn=true,history=[],messageCount=0,processing=false;
-const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-const stored=localStorage.getItem('avi_memory_on');memoryOn=stored!=='false';$('remember').textContent='Memory: '+(memoryOn?'ON':'OFF');
-try{history=memoryOn?JSON.parse(localStorage.getItem('avi_history')||'[]'):[]}catch{history=[]}
-function setStatus(s,ready=s.toUpperCase()){ $('status').textContent=s;$('ready').textContent=ready.slice(0,22);}
-function toast(s){$('toast').textContent=s;setTimeout(()=>{if($('toast').textContent===s)$('toast').textContent=''},4500)}
-function drawHistory(){messages.innerHTML='';messageCount=0;history.slice(-30).forEach(m=>{if(m.role==='user'||m.role==='assistant')addMessage(m.content,m.role==='user'?'user':'avi',false)});if(!messages.children.length)addMessage('Hi! I’m AVI. Ask me anything, in Hindi or English. I can also open websites and remember this chat on this device.', 'avi',false);updateCount()}
-function addMessage(text,who,save=true){const div=document.createElement('div');div.className='msg '+who;div.textContent=text;messages.appendChild(div);messages.scrollTop=messages.scrollHeight;messageCount++;updateCount();if(save&&memoryOn){history.push({role:who==='user'?'user':'assistant',content:text});history=history.slice(-60);localStorage.setItem('avi_history',JSON.stringify(history))}}
-function updateCount(){$('count').textContent=messageCount+' messages'}
-function speak(text){if(!voiceOn||!('speechSynthesis'in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=$('lang').value;u.rate=1;u.onstart=()=>{$('orb').classList.add('talk');setStatus('AVI is speaking…','SPEAKING')};u.onend=()=>{$('orb').classList.remove('talk');if(!listening)setStatus('AVI is ready','ONLINE')};window.speechSynthesis.speak(u)}
-function openSite(site){const urls={youtube:'https://www.youtube.com/',google:'https://www.google.com/search?q=',gmail:'https://mail.google.com/',maps:'https://maps.google.com/',whatsapp:'https://wa.me/'};if(!urls[site])return false;let url=urls[site];if(site==='google')url+='AVI+voice+assistant';window.open(url,'_blank','noopener,noreferrer');return true}
-function localAction(text){const s=text.toLowerCase().trim();if(/\b(open|launch|खोलो|खोलना)\b/.test(s)){if(/youtube|यूट्यूब/.test(s)){openSite('youtube');return'Opening YouTube in a new tab.'}if(/google|search|गूगल|सर्च/.test(s)){const q=text.replace(/open|search|google|गूगल|सर्च/ig,'').trim();window.open('https://www.google.com/search?q='+encodeURIComponent(q||''),'_blank','noopener,noreferrer');return'Opening Google search.'}if(/gmail|जीमेल/.test(s)){openSite('gmail');return'Opening Gmail.'}if(/maps|map|मैप/.test(s)){openSite('maps');return'Opening Google Maps.'}if(/whatsapp|व्हाट्सएप/.test(s)){openSite('whatsapp');return'Opening WhatsApp Web or app if available.'}}
-if(/^(what time|time now|समय क्या|कितने बजे)/.test(s))return'अभी समय है '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})+'।';
-if(/^(what is the date|date today|आज की तारीख)/.test(s))return'आज '+new Date().toLocaleDateString($('lang').value,{weekday:'long',year:'numeric',month:'long',day:'numeric'})+' है।';
-return null}
-async function askAI(text){const local=localAction(text);if(local)return local;setStatus('Thinking…','THINKING');try{const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,history:memoryOn?history.slice(-20):[],language:$('lang').value})});if(!response.ok){let msg='AI service is not configured yet.';try{const j=await response.json();if(j.error)msg=j.error}catch{}throw new Error(msg)}const data=await response.json();return data.reply||'I could not generate a response.'}catch(e){return 'I can’t reach the AI server right now. '+(e.message||'Check your connection.')+' You can still use the website buttons and basic local commands.'}}
-async function handleUser(text){if(!text.trim()||processing)return;processing=true;addMessage(text,'user');$('transcript').textContent=text;const result=await askAI(text);addMessage(result,'avi');$('transcript').textContent=result;setStatus('AVI is ready','ONLINE');speak(result);processing=false}
-$('form').addEventListener('submit',e=>{e.preventDefault();const t=$('input').value.trim();$('input').value='';handleUser(t)});
-document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>handleUser(b.dataset.prompt)));
-document.querySelectorAll('[data-site]').forEach(b=>b.addEventListener('click',()=>{const site=b.dataset.site;if(site==='google'){const q=prompt('What would you like to search?');if(q)window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank','noopener,noreferrer')}else openSite(site)}));
-$('mic').addEventListener('click',()=>{if(!recognition){toast('Voice recognition is not supported by this browser. Try Chrome or type instead.');return}if(listening){wakeMode=false;recognition.stop();return}wakeMode=false;startRecognition()});
-function startRecognition(){if(!recognition)return;try{recognition.lang=$('lang').value;recognition.continuous=wakeMode;recognition.interimResults=true;recognition.start()}catch(e){toast('Microphone may already be active. Try again in a moment.')}}
-if(SpeechRecognition){recognition=new SpeechRecognition();recognition.onstart=()=>{listening=true;$('orb').classList.add('listen');setStatus(wakeMode?'Wake-word mode active — say “Hey AVI”':'Listening…',wakeMode?'WAKE WORD ON':'LISTENING');$('hint').textContent=wakeMode?'Keep this page open. Say “Hey AVI” then your request.':'I’m listening — speak now.'};
-recognition.onresult=e=>{let finalText='';let interim='';for(let i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)finalText+=e.results[i][0].transcript;else interim+=e.results[i][0].transcript}if(interim)$('transcript').textContent=interim;if(finalText.trim()){const clean=finalText.trim();if(wakeMode){const match=clean.match(/hey\s+avi[, ]*(.*)/i)||clean.match(/हे\s+एवी[, ]*(.*)/i)||clean.match(/एवी[, ]*(.*)/i);if(match&&match[1].trim()){recognition.stop();handleUser(match[1].trim())}else if(match){$('transcript').textContent='Yes, I’m listening. Say your command.';speak('Yes, I’m listening. Say your command.')}else if(/hey avi|हे एवी|एवी/i.test(clean)){speak('Yes, I’m listening.');$('transcript').textContent='Yes, I’m listening. Say your command.'}}else{recognition.stop();handleUser(clean)}}};
-recognition.onerror=e=>{if(e.error==='not-allowed')toast('Microphone permission denied. Allow it in browser site settings.');else if(e.error!=='no-speech'&&e.error!=='aborted')toast('Voice error: '+e.error)};
-recognition.onend=()=>{listening=false;$('orb').classList.remove('listen');if(wakeMode){setStatus('Restarting wake-word listening…','WAKE WORD ON');setTimeout(()=>{if(wakeMode&&!listening)startRecognition()},700)}else{setStatus('AVI is ready','ONLINE');$('hint').textContent='Tap mic to speak · Enable “Hey AVI” for wake-word mode'}}}
-else{ $('mic').style.opacity='.5';toast('This browser does not support speech recognition. Use the text box.')}
-$('wake').addEventListener('click',()=>{if(!recognition){toast('Wake-word mode requires browser speech recognition (try Chrome).');return}wakeMode=!wakeMode;$('wakeLabel').textContent=wakeMode?'Disable wake word':'Enable Hey AVI';if(wakeMode){if(listening){try{recognition.stop()}catch{}}setTimeout(()=>{if(wakeMode)startRecognition()},250);toast('Wake word enabled. Keep AVI open and microphone permission allowed.')}else{try{recognition.stop()}catch{}setStatus('Wake word disabled','ONLINE')}});
-$('mute').addEventListener('click',()=>{voiceOn=!voiceOn;$('mute').textContent=voiceOn?'🔊':'🔇';if(!voiceOn)window.speechSynthesis?.cancel();toast('Voice replies '+(voiceOn?'enabled':'muted'))});
-$('remember').addEventListener('click',()=>{memoryOn=!memoryOn;localStorage.setItem('avi_memory_on',String(memoryOn));$('remember').textContent='Memory: '+(memoryOn?'ON':'OFF');if(memoryOn){localStorage.setItem('avi_history',JSON.stringify(history));toast('Memory enabled on this device.')}else{localStorage.removeItem('avi_history');toast('Memory disabled; saved browser history removed.')}});
-$('clearMemory').addEventListener('click',()=>{if(confirm('Erase AVI conversation memory stored in this browser?')){history=[];localStorage.removeItem('avi_history');messages.innerHTML='';messageCount=0;addMessage('Memory erased. Hello again — what can I help with?','avi',false);$('transcript').textContent='Local memory cleared.';toast('Conversation memory erased from this browser.')}});
-$('clear').addEventListener('click',()=>{history=[];localStorage.removeItem('avi_history');messages.innerHTML='';messageCount=0;addMessage('Chat cleared. Hello again!','avi',false);$('transcript').textContent='Conversation cleared.'});
+const $ = id => document.getElementById(id);
+const messages = $('messages');
+
+let recognition = null;
+let listening = false;
+let wakeMode = false;
+let voiceOn = true;
+let memoryOn = true;
+let history = [];
+let messageCount = 0;
+let processing = false;
+
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const stored = localStorage.getItem('avi_memory_on');
+memoryOn = stored !== 'false';
+
+$('remember').textContent = 'Memory: ' + (memoryOn ? 'ON' : 'OFF');
+
+try {
+  history = memoryOn
+    ? JSON.parse(localStorage.getItem('avi_history') || '[]')
+    : [];
+} catch {
+  history = [];
+}
+
+function setStatus(s, ready = s.toUpperCase()) {
+  $('status').textContent = s;
+  $('ready').textContent = ready.slice(0, 22);
+}
+
+function toast(s) {
+  $('toast').textContent = s;
+  setTimeout(() => {
+    if ($('toast').textContent === s) $('toast').textContent = '';
+  }, 4500);
+}
+
+function drawHistory() {
+  messages.innerHTML = '';
+  messageCount = 0;
+
+  history.slice(-30).forEach(m => {
+    if (m.role === 'user' || m.role === 'assistant') {
+      addMessage(m.content, m.role === 'user' ? 'user' : 'avi', false);
+    }
+  });
+
+  if (!messages.children.length) {
+    addMessage(
+      'Hi! I’m AVI. Ask me anything, in Hindi or English. I can also open websites and remember this chat on this device.',
+      'avi',
+      false
+    );
+  }
+
+  updateCount();
+}
+
+function addMessage(text, who, save = true) {
+  const div = document.createElement('div');
+  div.className = 'msg ' + who;
+  div.textContent = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+  messageCount++;
+  updateCount();
+
+  if (save && memoryOn) {
+    history.push({
+      role: who === 'user' ? 'user' : 'assistant',
+      content: text
+    });
+    history = history.slice(-60);
+    localStorage.setItem('avi_history', JSON.stringify(history));
+  }
+}
+
+function updateCount() {
+  $('count').textContent = messageCount + ' messages';
+}
+
+function speak(text) {
+  if (!voiceOn || !('speechSynthesis' in window)) return;
+
+  window.speechSynthesis.cancel();
+
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = $('lang').value;
+  u.rate = 1;
+
+  u.onstart = () => {
+    $('orb').classList.add('talk');
+    setStatus('AVI is speaking…', 'SPEAKING');
+  };
+
+  u.onend = () => {
+    $('orb').classList.remove('talk');
+    if (!listening) setStatus('AVI is ready', 'ONLINE');
+  };
+
+  window.speechSynthesis.speak(u);
+}
+
+function openSite(site) {
+  const urls = {
+    youtube: 'https://www.youtube.com/',
+    google: 'https://www.google.com/search?q=',
+    gmail: 'https://mail.google.com/',
+    maps: 'https://maps.google.com/',
+    whatsapp: 'https://wa.me/'
+  };
+
+  if (!urls[site]) return false;
+
+  let url = urls[site];
+  if (site === 'google') url += 'AVI+voice+assistant';
+
+  window.open(url, '_blank', 'noopener,noreferrer');
+  return true;
+}
+
+function localAction(text) {
+  const s = text.toLowerCase().trim();
+
+  if (/\b(open|launch|खोलो|खोलना)\b/.test(s)) {
+    if (/youtube|यूट्यूब/.test(s)) {
+      openSite('youtube');
+      return 'Opening YouTube in a new tab.';
+    }
+
+    if (/google|search|गूगल|सर्च/.test(s)) {
+      const q = text.replace(/open|search|google|गूगल|सर्च/ig, '').trim();
+      window.open(
+        'https://www.google.com/search?q=' + encodeURIComponent(q || ''),
+        '_blank',
+        'noopener,noreferrer'
+      );
+      return 'Opening Google search.';
+    }
+
+    if (/gmail|जीमेल/.test(s)) {
+      openSite('gmail');
+      return 'Opening Gmail.';
+    }
+
+    if (/maps|map|मैप/.test(s)) {
+      openSite('maps');
+      return 'Opening Google Maps.';
+    }
+
+    if (/whatsapp|व्हाट्सएप/.test(s)) {
+      openSite('whatsapp');
+      return 'Opening WhatsApp Web or app if available.';
+    }
+  }
+
+  if (/^(what time|time now|समय क्या|कितने बजे)/.test(s)) {
+    return 'अभी समय है ' +
+      new Date().toLocaleTimeString([], {
+        hour: 'numeric',
+        minute: '2-digit'
+      }) + '।';
+  }
+
+  if (/^(what is the date|date today|आज की तारीख)/.test(s)) {
+    return 'आज ' +
+      new Date().toLocaleDateString($('lang').value, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }) + ' है।';
+  }
+
+  return null;
+}
+
+async function askAI(text) {
+  const local = localAction(text);
+  if (local) return local;
+
+  setStatus('Thinking…', 'THINKING');
+
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        message: text,
+        history: memoryOn ? history.slice(-20) : [],
+        language: $('lang').value
+      })
+    });
+
+    if (!response.ok) {
+      let msg = 'AI service is not configured yet.';
+      try {
+        const j = await response.json();
+        if (j.error) msg = j.error;
+      } catch {}
+      throw new Error(msg);
+    }
+
+    const data = await response.json();
+    return data.reply || 'I could not generate a response.';
+  } catch (e) {
+    return 'I can’t reach the AI server right now. ' +
+      (e.message || 'Check your connection.') +
+      ' You can still use the website buttons and basic local commands.';
+  }
+}
+
+async function handleUser(text) {
+  if (!text.trim() || processing) return;
+
+  processing = true;
+  addMessage(text, 'user');
+  $('transcript').textContent = text;
+
+  try {
+    const result = await askAI(text);
+    addMessage(result, 'avi');
+    $('transcript').textContent = result;
+    setStatus('AVI is ready', 'ONLINE');
+    speak(result);
+  } finally {
+    processing = false;
+  }
+}
+
+$('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const t = $('input').value.trim();
+  $('input').value = '';
+  handleUser(t);
+});
+
+document.querySelectorAll('[data-prompt]').forEach(b => {
+  b.addEventListener('click', () => handleUser(b.dataset.prompt));
+});
+
+document.querySelectorAll('[data-site]').forEach(b => {
+  b.addEventListener('click', () => {
+    const site = b.dataset.site;
+
+    if (site === 'google') {
+      const q = prompt('What would you like to search?');
+      if (q) {
+        window.open(
+          'https://www.google.com/search?q=' + encodeURIComponent(q),
+          '_blank',
+          'noopener,noreferrer'
+        );
+      }
+    } else {
+      openSite(site);
+    }
+  });
+});
+
+$('mic').addEventListener('click', () => {
+  if (!recognition) {
+    toast('Voice recognition is not supported by this browser. Try Chrome or type instead.');
+    return;
+  }
+
+  if (listening) {
+    wakeMode = false;
+    recognition.stop();
+    return;
+  }
+
+  wakeMode = false;
+  startRecognition();
+});
+
+function startRecognition() {
+  if (!recognition) return;
+
+  try {
+    recognition.lang = $('lang').value;
+    recognition.continuous = wakeMode;
+    recognition.interimResults = true;
+    recognition.start();
+  } catch (e) {
+    toast('Microphone may already be active. Try again in a moment.');
+  }
+}
+
+if (SpeechRecognition) {
+  recognition = new SpeechRecognition();
+
+  recognition.onstart = () => {
+    listening = true;
+    $('orb').classList.add('listen');
+
+    setStatus(
+      wakeMode ? 'Wake-word mode active — say “Hey AVI”' : 'Listening…',
+      wakeMode ? 'WAKE WORD ON' : 'LISTENING'
+    );
+
+    $('hint').textContent = wakeMode
+      ? 'Keep this page open. Say “Hey AVI” then your request.'
+      : 'I’m listening — speak now.';
+  };
+
+  recognition.onresult = e => {
+    let finalText = '';
+    let interim = '';
+
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) {
+        finalText += e.results[i][0].transcript;
+      } else {
+        interim += e.results[i][0].transcript;
+      }
+    }
+
+    if (interim) $('transcript').textContent = interim;
+
+    if (finalText.trim()) {
+      const clean = finalText.trim();
+
+      if (wakeMode) {
+        const match =
+          clean.match(/hey\s+avi[, ]*(.*)/i) ||
+          clean.match(/हे\s+एवी[, ]*(.*)/i) ||
+          clean.match(/एवी[, ]*(.*)/i);
+
+        if (match && match[1].trim()) {
+          recognition.stop();
+          handleUser(match[1].trim());
+        } else if (match) {
+          $('transcript').textContent = 'Yes, I’m listening. Say your command.';
+          speak('Yes, I’m listening. Say your command.');
+        } else if (/hey avi|हे एवी|एवी/i.test(clean)) {
+          speak('Yes, I’m listening.');
+          $('transcript').textContent = 'Yes, I’m listening. Say your command.';
+        }
+      } else {
+        recognition.stop();
+        handleUser(clean);
+      }
+    }
+  };
+
+  recognition.onerror = e => {
+    if (e.error === 'not-allowed') {
+      toast('Microphone permission denied. Allow it in browser site settings.');
+    } else if (e.error !== 'no-speech' && e.error !== 'aborted') {
+      toast('Voice error: ' + e.error);
+    }
+  };
+
+  recognition.onend = () => {
+    listening = false;
+    $('orb').classList.remove('listen');
+
+    if (wakeMode) {
+      setStatus('Restarting wake-word listening…', 'WAKE WORD ON');
+      setTimeout(() => {
+        if (wakeMode && !listening) startRecognition();
+      }, 700);
+    } else {
+      setStatus('AVI is ready', 'ONLINE');
+      $('hint').textContent =
+        'Tap mic to speak · Enable “Hey AVI” for wake-word mode';
+    }
+  };
+} else {
+  $('mic').style.opacity = '.5';
+  toast('This browser does not support speech recognition. Use the text box.');
+}
+
+$('wake').addEventListener('click', () => {
+  if (!recognition) {
+    toast('Wake-word mode requires browser speech recognition (try Chrome).');
+    return;
+  }
+
+  wakeMode = !wakeMode;
+  $('wakeLabel').textContent = wakeMode
+    ? 'Disable wake word'
+    : 'Enable Hey AVI';
+
+  if (wakeMode) {
+    if (listening) {
+      try { recognition.stop(); } catch {}
+    }
+
+    setTimeout(() => {
+      if (wakeMode) startRecognition();
+    }, 250);
+
+    toast('Wake word enabled. Keep AVI open and microphone permission allowed.');
+  } else {
+    try { recognition.stop(); } catch {}
+    setStatus('Wake word disabled', 'ONLINE');
+  }
+});
+
+$('mute').addEventListener('click', () => {
+  voiceOn = !voiceOn;
+  $('mute').textContent = voiceOn ? '🔊' : '🔇';
+
+  if (!voiceOn && window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+  }
+
+  toast('Voice replies ' + (voiceOn ? 'enabled' : 'muted'));
+});
+
+$('remember').addEventListener('click', () => {
+  memoryOn = !memoryOn;
+  localStorage.setItem('avi_memory_on', String(memoryOn));
+  $('remember').textContent = 'Memory: ' + (memoryOn ? 'ON' : 'OFF');
+
+  if (memoryOn) {
+    localStorage.setItem('avi_history', JSON.stringify(history));
+    toast('Memory enabled on this device.');
+  } else {
+    localStorage.removeItem('avi_history');
+    toast('Memory disabled; saved browser history removed.');
+  }
+});
+
+$('clearMemory').addEventListener('click', () => {
+  if (confirm('Erase AVI conversation memory stored in this browser?')) {
+    history = [];
+    localStorage.removeItem('avi_history');
+    messages.innerHTML = '';
+    messageCount = 0;
+
+    addMessage(
+      'Memory erased. Hello again — what can I help with?',
+      'avi',
+      false
+    );
+
+    $('transcript').textContent = 'Local memory cleared.';
+    toast('Conversation memory erased from this browser.');
+  }
+});
+
+$('clear').addEventListener('click', () => {
+  history = [];
+  localStorage.removeItem('avi_history');
+  messages.innerHTML = '';
+  messageCount = 0;
+
+  addMessage('Chat cleared. Hello again!', 'avi', false);
+  $('transcript').textContent = 'Conversation cleared.';
+});
+
 drawHistory();
-</script></body></html>
+</script>
+</body>
+</html>
