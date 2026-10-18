@@ -404,6 +404,10 @@ header{
   <div class="messages" id="messages"></div>
   <form class="composer" id="form">
     <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,application/pdf" hidden>
+    <input type="file" id="cameraInput"
+  accept="image/*" capture="environment" hidden>
+<button type="button" class="small" id="cameraBtn"
+  aria-label="Take photo">📷</button>
 <button type="button" class="small" id="uploadBtn">📎</button>
     <input id="input" autocomplete="off" placeholder="Ask AVI anything…" aria-label="Message AVI">
     <button class="send" aria-label="Send message">
@@ -431,6 +435,59 @@ header{
 <script>
 const $ = id => document.getElementById(id);
 const messages = $('messages');
+  
+$('uploadBtn').addEventListener('click', () => {
+  $('fileInput').click();
+});
+
+$('cameraBtn').addEventListener('click', () => {
+  $('cameraInput').click();
+});
+
+async function analyzePhoto(file) {
+  if (!file) return;
+
+  addMessage('📷 Photo selected: ' + file.name, 'user');
+  setStatus('Photo ko samajh raha hoon…', 'ANALYZING');
+
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('message', 'Is photo mein kya hai? Hindi mein detail se samjhao.');
+  formData.append('language', $('lang').value);
+
+  try {
+    const response = await fetch('/api/upload-chat', {
+      method: 'POST',
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Photo analyze nahi ho payi.');
+    }
+
+    addMessage(data.reply, 'avi');
+    $('transcript').textContent = data.reply;
+    speak(data.reply);
+    setStatus('AVI is ready', 'ONLINE');
+  } catch (error) {
+    addMessage('Photo analysis error: ' + error.message, 'avi');
+    setStatus('Photo analysis failed', 'ERROR');
+  }
+}
+
+$('fileInput').addEventListener('change', async () => {
+  const file = $('fileInput').files[0];
+  await analyzePhoto(file);
+  $('fileInput').value = '';
+});
+
+$('cameraInput').addEventListener('change', async () => {
+  const file = $('cameraInput').files[0];
+  await analyzePhoto(file);
+  $('cameraInput').value = '';
+});
 
 let recognition = null;
 let listening = false;
