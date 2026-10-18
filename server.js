@@ -5,7 +5,7 @@ import multer from "multer";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const MODEL = "gemini-2.5-flash";
+const MODEL = "gemini-3.8-flash";
 
 app.disable("x-powered-by");
 app.set("trust proxy", 1);
