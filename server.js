@@ -108,5 +108,9 @@ Never claim to perform actions unless the client confirms them.`
     });
   }
 });
-
+app.post("/api/upload-chat", async (req, res) => {
+  return res.status(501).json({
+    error: "Upload feature setup is incomplete. Backend upload handling needs to be configured."
+  });
+});
 app.listen(PORT, () => console.log(`AVI running on port ${PORT}`));
