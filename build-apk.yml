@@ -3,8 +3,6 @@ name: Build AVI Android APK
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
 
 jobs:
   build:
@@ -16,9 +14,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
 
-      - name: Create Android project with Bubblewrap
+      - name: Install Bubblewrap
+        run: npm install -g @bubblewrap/cli
+
+      - name: Check AVI manifest
         run: |
-          npm install -g @bubblewrap/cli
+          curl -fL https://avi-assistant.onrender.com/manifest.json -o manifest.json
+          cat manifest.json
+
+      - name: Initialize Android project
+        run: |
+          mkdir android-app
+          cd android-app
           bubblewrap init --manifest https://avi-assistant.onrender.com/manifest.json
