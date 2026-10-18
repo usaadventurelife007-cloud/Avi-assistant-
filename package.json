@@ -9,7 +9,4 @@
 "dependencies": {
 "express": "^4.21.2",
 "express-rate-limit": "^7.5.0",
-  import multer from "multer";
-"multer": "^2.0.2"
-}
-}
+  
