@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.disable("x-powered-by");
 app.set("trust proxy", 1);
 app.use(express.json({ limit: "20kb" }));
-app.use(express.static("public"));
+app.use(express.static(process.cwd()));
 
 app.get("/", (req, res) => {
   res.sendFile(process.cwd() + "/index.html");
